@@ -4,20 +4,23 @@ const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-// const dbConfig = require("./database/db");
+const dbConfig = require("./database/db");
 
 // Connecting with mongo db
-// mongoose.Promise = global.Promise;
-// mongoose
-//   .connect(dbConfig.db, {
-//     useNewUrlParser: true,
-//   })
-//   .then(() => {
-//     console.log("Database successfully connected");
-//   })
-//   .catch((error) => {
-//     console.log("Database could not connected: " + error);
-//   });
+mongoose.Promise = global.Promise;
+mongoose
+  .connect(dbConfig.db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  })
+  .then(() => {
+    console.log("Database successfully connected");
+  })
+  .catch((error) => {
+    console.log("Database could not connected: " + error);
+  });
 
 // Setting up port with express js
 // const employeeRoute = require("../backend/routes/employee.route");
