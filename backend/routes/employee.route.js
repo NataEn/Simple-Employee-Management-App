@@ -1,8 +1,8 @@
 const express = require("express");
 const employeeRoute = express.Router();
-const Employee = require("../models/Employee.js");
+const Employee = require("../database/models/Employee.js");
 
-employeeRoute.route("/create").post((req, res, next) => {
+employeeRoute.post("/create", (req, res, next) => {
   const employee = req.body;
   Employee.create(employee, (err, data) => {
     if (err) {
@@ -12,7 +12,7 @@ employeeRoute.route("/create").post((req, res, next) => {
   });
 });
 
-employeeRoute.route("/").get((req, res, next) => {
+employeeRoute.get("/", (req, res, next) => {
   Employee.find((err, data) => {
     if (err) {
       return next(err);
@@ -20,7 +20,7 @@ employeeRoute.route("/").get((req, res, next) => {
     res.json(data);
   });
 });
-employeeRoute.route("/:id").get((req, res, next) => {
+employeeRoute.get("/:id", (req, res, next) => {
   Employee.findById(req.params.id, (err, data) => {
     if (err) {
       return next(err);
@@ -29,7 +29,7 @@ employeeRoute.route("/:id").get((req, res, next) => {
   });
 });
 
-employeeRoute.route("/update/:id").put((req, res, next) => {
+employeeRoute.put("/update/:id", (req, res, next) => {
   Employee.findByIdAndUpdate(
     req.params.id,
     {
@@ -45,7 +45,7 @@ employeeRoute.route("/update/:id").put((req, res, next) => {
     }
   );
 });
-employeeRoute.route("/delete/:id").delete((req, res, next) => {
+employeeRoute.delete("/delete/:id", (req, res, next) => {
   Employee.findOneAndRemove(req.params.id, (error, data) => {
     if (error) {
       return next(error);
@@ -57,3 +57,5 @@ employeeRoute.route("/delete/:id").delete((req, res, next) => {
     }
   });
 });
+
+module.exports = employeeRoute;
