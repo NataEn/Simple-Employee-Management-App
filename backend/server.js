@@ -4,6 +4,8 @@ const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+var session = require("express-session");
+var cookieParser = require("cookie-parser");
 
 const dbConfig = require("./database/db");
 const createError = require("http-errors");
@@ -40,9 +42,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
-    extended: false,
+    extended: true,
   })
 );
+app.use(cookieParser());
 
 app.use(cors());
 app.get("/", (req, res) => {
