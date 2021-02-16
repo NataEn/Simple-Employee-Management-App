@@ -4,6 +4,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+
 const dbConfig = require("./database/db");
 const createError = require("http-errors");
 
@@ -47,6 +48,13 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+app.get("/login", (req, res) => {
+  res.send("login");
+});
+app.get("/logout", (req, res) => {
+  res.send("logout");
+});
+app.get("/data", dataRoute);
 // app.use(
 //   express.static(path.join(__dirname, "dist/simple-employee-management-app"))
 // );
