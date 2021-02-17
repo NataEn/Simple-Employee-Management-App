@@ -6,6 +6,14 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 var session = require("express-session");
 var cookieParser = require("cookie-parser");
+const { auth } = require("./middleware/auth");
+const dataRoute = require("./routes/data.route");
+const {
+  registerUser,
+  loginUser,
+  logoutUser,
+  getUserDetails,
+} = require("./controllers/auth.controller");
 
 const dbConfig = require("./database/db");
 const createError = require("http-errors");
@@ -47,9 +55,10 @@ app.use(
 );
 app.use(cookieParser());
 
+// app.use("static", path.join(__dirname, "./index.html"));
 app.use(cors());
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.sendFile(path.join(__dirname + "/index.html"));
 });
 app.get("/login", (req, res) => {
   res.send("login");
@@ -58,14 +67,12 @@ app.get("/logout", (req, res) => {
   res.send("logout");
 });
 app.get("/data", dataRoute);
-// app.use(
-//   express.static(path.join(__dirname, "dist/simple-employee-management-app"))
-// );
-// app.use(
-//   "/",
-//   express.static(path.join(__dirname, "dist/simple-employee-management-app"))
-// );
+
 app.use("/api", employeeRoute);
+app.post("/api/users/register", registerUser);
+app.post("/api/users/login", loginUser);
+app.get("/api/users/auth", auth, getUserDetails);
+app.get("/api/users/logout", auth, logoutUser);
 app.use((err, req, res, next) => {
   createError(500, err);
 });

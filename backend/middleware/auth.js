@@ -1,5 +1,5 @@
 //in auth.js
-const { User } = require("../models/UserModel");
+const { User } = require("../database/models/User");
 const auth = (req, res, next) => {
   let token = req.cookies.authToken;
 

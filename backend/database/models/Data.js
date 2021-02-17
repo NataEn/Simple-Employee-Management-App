@@ -5,13 +5,14 @@ const Data = new Schema(
     procedure: {
       type: String,
     },
-    timestamp: true,
+
     value: {
       type: Number,
     },
   },
   {
     collection: "data",
-  }
+  },
+  { timestamps: true }
 );
 module.exports = mongoose.model("Data", Data);
